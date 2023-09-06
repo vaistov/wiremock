@@ -29,4 +29,19 @@ public class WireMockTest {
         System.out.println(as);
         wm.removeStubMapping(wq);
     }
+    @Test
+    void two() {
+        var wq = wm.register(WireMock.get("/users/22").willReturn(ResponseDefinitionBuilder.okForJson("OK BOSS")));
+
+        var as = given()
+                .when()
+                .auth()
+                .basic("asdf","asdf")
+                .headers("content-type", "application/json")
+                .get("https://w7eve.wiremockapi.cloud/users/22")
+                .then().log().all();
+        Allure.addAttachment("Response body", as.toString());
+        System.out.println(as);
+        wm.removeStubMapping(wq);
+    }
 }
