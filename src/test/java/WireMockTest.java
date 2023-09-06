@@ -1,6 +1,7 @@
 import com.github.tomakehurst.wiremock.client.ResponseDefinitionBuilder;
 import com.github.tomakehurst.wiremock.client.WireMock;
 import com.github.tomakehurst.wiremock.security.ClientTokenAuthenticator;
+import io.qameta.allure.Allure;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
@@ -24,6 +25,7 @@ public class WireMockTest {
                 .headers("content-type", "application/json")
                 .get("https://w7eve.wiremockapi.cloud/users/21")
                 .then().log().all();
+        Allure.addAttachment("Response body", as.toString());
         System.out.println(as);
         wm.removeStubMapping(wq);
     }
